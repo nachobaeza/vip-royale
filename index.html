@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0D0725">
+<meta name="description" content="VIP Royale: muestra navegable del front, con datos de ejemplo. Amistosas 1v1 de Clash Royale por monto.">
+<title>VIP Royale</title>
+<link rel="preload" href="fuentes/barlow-condensed-latin-800-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fuentes/barlow-condensed-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fuentes/barlow-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<!-- Degradés compartidos: se definen una sola vez, fuera de cualquier bloque oculto -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="g-v1" x1="0" y1="0" x2=".35" y2="1"><stop offset="0" stop-color="#F3E9FF"/><stop offset=".45" stop-color="#C097FF"/><stop offset="1" stop-color="#8446F5"/></linearGradient>
+    <linearGradient id="g-v2" x1="0" y1="0" x2=".35" y2="1"><stop offset="0" stop-color="#9B5DFF"/><stop offset="1" stop-color="#5420CC"/></linearGradient>
+    <linearGradient id="g-v3" x1="1" y1="0" x2=".65" y2="1"><stop offset="0" stop-color="#A46BFF"/><stop offset=".55" stop-color="#6A2BE2"/><stop offset="1" stop-color="#3E14A6"/></linearGradient>
+    <linearGradient id="g-v4" x1="1" y1="0" x2=".65" y2="1"><stop offset="0" stop-color="#E2D0FF"/><stop offset="1" stop-color="#8E4CFF"/></linearGradient>
+    <linearGradient id="g-oro" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6C4"/><stop offset=".5" stop-color="#F7D65A"/><stop offset="1" stop-color="#C4921C"/></linearGradient>
+    <radialGradient id="g-med" cx="50%" cy="35%" r="70%"><stop offset="0" stop-color="#6426C0"/><stop offset=".6" stop-color="#38106B"/><stop offset="1" stop-color="#21093E"/></radialGradient>
+    <linearGradient id="g-llama" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#F0344A"/><stop offset=".5" stop-color="#FF8A3C"/><stop offset="1" stop-color="#FFE27A"/></linearGradient>
+    <linearGradient id="g-gema" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E6E0FF"/><stop offset=".5" stop-color="#AE8EFF"/><stop offset="1" stop-color="#6304FF"/></linearGradient>
+    <linearGradient id="g-sa" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B8F3FF"/><stop offset=".5" stop-color="#2FC3F2"/><stop offset="1" stop-color="#0A78C6"/></linearGradient>
+    <linearGradient id="g-sr" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF9AA4"/><stop offset=".5" stop-color="#F0344A"/><stop offset="1" stop-color="#A8102A"/></linearGradient>
+    <radialGradient id="g-chispa" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".35" stop-color="#FFF0B0"/><stop offset="1" stop-color="#F2CF55" stop-opacity="0"/></radialGradient>
+  </defs>
+</svg>
+
+<div class="cartel" role="status"><i></i>Saldo de prueba, sin valor<i></i><b class="c18" aria-label="Solo mayores de 18">+18</b></div>
+
+<div class="app" id="app">
+  <aside class="lateral" id="lateral" aria-label="Navegación principal"></aside>
+  <header class="cab" id="cab"></header>
+  <main class="vista" id="vista" tabindex="-1"></main>
+  <nav class="barra" id="barra" aria-label="Navegación"></nav>
+</div>
+
+<div class="capa" id="capa" hidden></div>
+<div id="avisos" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

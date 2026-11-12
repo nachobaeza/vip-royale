@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="VIP Royale: visor de la versión mobile, con datos de ejemplo.">
+<title>VIP Royale · versión mobile (visor)</title>
+<link rel="icon" href="data:,">
+<!--
+  VISOR, no es parte de la plataforma. Muestra index.html dentro de un marco de celular de 390×844
+  para ver la versión mobile desde la PC, con accesos directos a cada pantalla y a cada estado de la sala.
+  En un teléfono de verdad se abre index.html directo. Las fuentes salen de fuentes/: no hay pedidos afuera.
+-->
+<style>
+  @font-face { font-family: "Barlow"; font-weight: 600; font-display: swap; src: url(fuentes/barlow-latin-600-normal.woff2) format("woff2"); }
+  @font-face { font-family: "Barlow"; font-weight: 700; font-display: swap; src: url(fuentes/barlow-latin-700-normal.woff2) format("woff2"); }
+  @font-face { font-family: "Barlow Condensed"; font-weight: 800; font-style: italic; font-display: swap; src: url(fuentes/barlow-condensed-latin-800-italic.woff2) format("woff2"); }
+  @font-face { font-family: "Barlow Condensed"; font-weight: 800; font-display: swap; src: url(fuentes/barlow-condensed-latin-800-normal.woff2) format("woff2"); }
+  :root { color-scheme: dark; --hint-h: 34px; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { margin: 0; background: radial-gradient(90% 60% at 60% 0%, rgba(164, 92, 255, .24), transparent 60%), #0B0620; color: #F6F1FF; font: 600 14px/1.4 "Barlow", system-ui, sans-serif; overflow: hidden; }
+  .wrap { height: 100%; display: grid; grid-template-columns: 360px minmax(0, 1fr); }
+  aside { padding: 20px 16px 16px; border-right: 1px solid rgba(190, 150, 255, .18); background: rgba(23, 14, 54, .66); overflow: auto; scrollbar-width: thin; scrollbar-color: #5B21D6 transparent; }
+  h1 { margin: 0 0 6px; font: italic 800 30px/1 "Barlow Condensed", sans-serif; letter-spacing: .01em; text-transform: uppercase; }
+  h1 b { color: #B993FF; }
+  p { margin: 0 0 12px; color: #D4C9F2; font-size: 13px; }
+  p b { color: #fff; }
+  h2 { margin: 12px 0 6px; color: #A99CD2; font: 700 11px/1 "Barlow", sans-serif; letter-spacing: .18em; text-transform: uppercase; }
+  .grupo { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+  /* Las etiquetas pueden ocupar dos renglones: nunca se cortan con «…» */
+  button { display: flex; align-items: center; gap: 6px; width: 100%; margin: 0; min-height: 29px; padding: 4px 9px; white-space: normal; text-align: left; cursor: pointer; border-radius: 10px;
+    font: 700 12.5px/1.15 "Barlow", sans-serif; color: #F6F1FF; background: #170E36; border: 1px solid rgba(190, 150, 255, .22); transition: border-color .15s, background .15s; }
+  button span { min-width: 0; }
+  .tam { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+  .tam button { justify-content: center; text-align: center; padding: 4px; font-size: 11.5px; }
+  button:hover { border-color: #A45CFF; }
+  button:focus-visible { outline: 2px solid #B993FF; outline-offset: 2px; }
+  button.on { color: #fff; background: linear-gradient(100deg, #5B21D6, #7634EA); border-color: rgba(255, 255, 255, .55); box-shadow: 0 0 16px rgba(164, 92, 255, .5); }
+  button i { flex: none; width: 22px; font-style: normal; font-size: 10.5px; color: #A99CD2; }
+  button.on i { color: #E6DAFF; }
+  /* El escenario reserva abajo una franja propia para el texto: el teléfono nunca la pisa */
+  .stage { position: relative; min-width: 0; min-height: 0; overflow: hidden; }
+  .phone { position: absolute; left: 50%; top: calc((100% - var(--hint-h)) / 2); width: calc(var(--w, 390px) + 24px); height: calc(var(--h, 844px) + 24px); padding: 12px; border-radius: 54px; transform: translate(-50%, -50%) scale(var(--s, 1)); transform-origin: 50% 50%;
+    background: linear-gradient(160deg, #2C2147, #0C0718 40%, #211640); box-shadow: 0 0 0 2px rgba(190, 150, 255, .35), 0 0 80px rgba(164, 92, 255, .32), 0 40px 80px rgba(0, 0, 0, .6); }
+  /* La pantalla recorta al marco: con el teléfono escalado, las esquinas del iframe quedaban cuadradas */
+  .pantalla { width: var(--w, 390px); height: var(--h, 844px); border-radius: 42px; overflow: hidden; isolation: isolate; clip-path: inset(0 round 42px); background: #0B0620; transform: translateZ(0); }
+  iframe { width: 100%; height: 100%; border: 0; display: block; background: #0B0620; }
+  .hint { position: absolute; left: 0; right: 0; bottom: 0; height: var(--hint-h); display: grid; place-items: center; padding: 0 12px; text-align: center; color: #A99CD2; font-size: 12px; pointer-events: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  @media (max-width: 1100px) { .wrap { grid-template-columns: 300px minmax(0, 1fr); } .grupo { grid-template-columns: 1fr; } }
+  @media (max-width: 760px) { .wrap { grid-template-columns: 1fr; } aside { display: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <aside>
+    <h1>VIP Royale <b>mobile</b></h1>
+    <p>La plataforma en un celular de 390×844: es la misma página que se abre en un teléfono (<b>index.html</b>). Se toca y se navega adentro. Sólo front, con datos de ejemplo. La numeración es la misma que la de las láminas.</p>
+    <h2>Lobby, en orden de uso</h2>
+    <div class="grupo" id="nav-lobby"></div>
+    <h2>Sala del duelo</h2>
+    <div class="grupo" id="nav-sala"></div>
+    <h2>Tamaño de pantalla</h2>
+    <div class="tam" id="nav-tam"></div>
+    <p style="margin-top:8px;font-size:12px;color:#A99CD2">390×664 es lo que se ve en el Safari de un iPhone con las barras abiertas; 375×667, un iPhone SE; 360×640, un Android chico.</p>
+  </aside>
+  <div class="stage" id="stage">
+    <div class="phone" id="phone"><div class="pantalla"><iframe id="f" title="VIP Royale en celular" src="index.html?visor=1#inicio"></iframe></div></div>
+    <div class="hint" id="hint">Visor de la versión mobile · no es parte de la plataforma · saldo de prueba, sin valor</div>
+  </div>
+</div>
+<script>
+(function () {
+  var f = document.getElementById('f'), phone = document.getElementById('phone'), stage = document.getElementById('stage');
+  /* [texto, consulta, pantalla]. Mismo orden y misma numeración que las láminas del recorrido (1 a 30 y S1 a S16).
+     La consulta pide un estado que no tiene pantalla propia (una hoja abierta, el chat de la sala…). amigo=1: el rival ya es amigo. */
+  var LOBBY = [
+    ['Llegada (2,6 s)', 'intro=1', 'ingreso'], ['Ingreso', '', 'ingreso'], ['Crear cuenta', 'estado=registro', 'ingreso'], ['Vincular Clash', '', 'vincular'], ['¿Sos vos?', 'estado=vinc-2', 'vincular'],
+    ['Inicio', '', 'inicio'], ['Inicio · juegos y mesas', 'estado=inicio-juegos', 'inicio'], ['Jugar', '', 'jugar'], ['Mesas', '', 'mesas'], ['Crear mesa', '', 'crear'],
+    ['Monto inválido', 'estado=crear-invalido', 'crear'], ['Mesa privada', 'estado=privada', 'mesas'], ['Tu mesa espera rival', 'estado=mi-mesa', 'mesas'], ['Unirse a una mesa', 'estado=unirse', 'mesas'],
+    ['Billetera', '', 'billetera'], ['Depositar', 'estado=depositar', 'billetera'], ['Retirar', 'estado=retirar', 'billetera'],
+    ['Ranking', '', 'ranking'], ['Chat global', '', 'chat'], ['Perfil', '', 'perfil'], ['Foto de perfil', 'estado=avatares', 'perfil'], ['Fondo del perfil', 'estado=fondo-perfil', 'perfil'], ['Límites y pausas', 'estado=limites', 'perfil'],
+    ['Notificaciones', '', 'notificaciones'], ['Torneos', '', 'torneos'], ['Inscribirse', 'estado=inscribirme', 'torneos'], ['Crear torneo', 'estado=crear-torneo', 'torneos'], ['Torneo en juego', 'estado=torneo-juego', 'torneos'],
+    ['Historial', '', 'historial'], ['Detalle y reclamo', 'estado=hist-detalle', 'historial']
+  ];
+  var SALA = [
+    ['Primer duelo: agregá al rival', '', 'duelo'], ['Ya son amigos: a jugar', 'amigo=1', 'duelo'], ['INFO de la sala', 'estado=info', 'duelo'],
+    ['Chat sala · Todo', 'estado=chat-todo&amigo=1', 'duelo'], ['Chat sala · Chat', 'estado=chat-chat&amigo=1', 'duelo'], ['Chat sala · Frases', 'estado=chat-frases&amigo=1', 'duelo'], ['Mensaje nuevo', 'estado=chat-punto&amigo=1', 'duelo'],
+    ['Pedir cancelar', 'estado=cancelar&amigo=1', 'duelo'], ['Verificando · leyendo', 'amigo=1', 'verificando'], ['Verificando · leído', 'estado=verif-leido&amigo=1', 'verificando'],
+    ['Ganaste', 'amigo=1', 'ganaste'], ['Perdiste', 'amigo=1', 'perdiste'], ['Empate', 'amigo=1', 'empate'], ['Revancha', 'estado=revancha&amigo=1', 'ganaste'],
+    ['Temas de sala', 'estado=temas&amigo=1', 'duelo'], ['Tema Platino', 'sala=platino&amigo=1', 'duelo']
+  ];
+  var TAM = [[390, 844], [390, 664], [375, 667], [360, 640]];
+  var actual = null, tam = TAM[0];
+  /* Siempre se recarga el marco entero: cada acceso arranca con el estado de ejemplo limpio */
+  function cargar(x) { f.src = 'index.html?visor=1&' + (x[1] ? x[1] + '&' : '') + 't=' + Date.now() + '#' + x[2]; }
+  function mk(host, list, pre) {
+    list.forEach(function (x, k) {
+      var b = document.createElement('button');
+      b.innerHTML = '<i>' + pre + (k + 1) + '</i><span></span>'; b.lastChild.textContent = x[0];
+      b.addEventListener('click', function () {
+        document.querySelectorAll('#nav-lobby button, #nav-sala button').forEach(function (o) { o.classList.remove('on'); }); b.classList.add('on');
+        actual = x; cargar(x);
+      });
+      host.appendChild(b);
+    });
+  }
+  mk(document.getElementById('nav-lobby'), LOBBY, ''); mk(document.getElementById('nav-sala'), SALA, 'S');
+  document.querySelectorAll('#nav-lobby button')[5].classList.add('on');
+  /* Tamaño de pantalla: cambia el marco y vuelve a cargar la pantalla que estaba elegida */
+  TAM.forEach(function (t, k) {
+    var b = document.createElement('button'); b.textContent = t[0] + '×' + t[1]; if (!k) b.classList.add('on');
+    b.addEventListener('click', function () {
+      document.querySelectorAll('#nav-tam button').forEach(function (o) { o.classList.remove('on'); }); b.classList.add('on');
+      tam = t; phone.style.setProperty('--w', t[0] + 'px'); phone.style.setProperty('--h', t[1] + 'px'); fit();
+      document.getElementById('hint').textContent = 'Visor de la versión mobile · ' + t[0] + ' × ' + t[1] + ' · no es parte de la plataforma · saldo de prueba, sin valor';
+      cargar(actual || LOBBY[5]);
+    });
+    document.getElementById('nav-tam').appendChild(b);
+  });
+  /* Escala: el teléfono entra entero en el alto que queda arriba de la franja del texto, con 12 px de aire */
+  function fit() {
+    var hint = 34, alto = stage.clientHeight - hint - 24, ancho = stage.clientWidth - 24;
+    var s = Math.min(1, alto / (tam[1] + 24), ancho / (tam[0] + 24));
+    phone.style.setProperty('--s', s.toFixed(4));
+  }
+  window.addEventListener('resize', fit); fit();
+  /* La barra de desplazamiento del navegador (que en un teléfono no existe) la oculta la página misma con ?visor=1 */
+})();
+</script>
+</body>
+</html>
